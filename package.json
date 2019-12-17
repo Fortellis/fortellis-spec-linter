@@ -1,0 +1,15 @@
+{
+  "name": "fortellis-spec-validation",
+  "version": "1.0.0",
+  "description": "Validate fortellis API specifications",
+  "main": "index.js",
+  "scripts": {
+    "cli": "spectral lint test-spec.yaml --ruleset .spectral.json --verbose"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@stoplight/spectral": "^4.2.0",
+    "@stoplight/yaml": "^3.5.0"
+  }
+}
