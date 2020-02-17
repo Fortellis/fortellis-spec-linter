@@ -1,3 +1,6 @@
 {
-  "extends": "eslint-config-fortellis-platform"
+  "extends": "eslint-config-fortellis-platform",
+  "rules": {
+    "require-atomic-updates": "off"
+  }
 }
