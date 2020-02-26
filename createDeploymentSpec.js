@@ -19,12 +19,12 @@ try {
   if (currentVersion === version) {
     console.log(`Package ${name}@${version} already exists.\n`);
   } else {
-    const filename = `${name}-${version}.tgz`;
+    const filename = `fortellis-spec-validator-${version}.tgz`;
     const deploymentSpec = {
       files: [
         {
           pattern: `*/${filename}`,
-          target: `npm-local/${filename}`
+          target: `npm-local/@fortellis/${filename}`
         }
       ]
     };

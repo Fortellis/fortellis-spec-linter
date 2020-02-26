@@ -2,3 +2,4 @@ node_modules/
 coverage/
 *.tgz
 artifactory-deployment-spec.json
+.DS_Store
