@@ -1,6 +1,6 @@
 {
   "name": "@fortellis/spec-validator",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Validate fortellis API specifications",
   "main": "lib/index.js",
   "scripts": {
