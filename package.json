@@ -1,6 +1,6 @@
 {
-  "name": "fortellis-spec-validator",
-  "version": "1.0.0",
+  "name": "@fortellis/spec-validator",
+  "version": "1.0.5",
   "description": "Validate fortellis API specifications",
   "main": "lib/index.js",
   "scripts": {
@@ -17,8 +17,8 @@
     "@stoplight/yaml": "^3.5.0"
   },
   "devDependencies": {
+    "@fortellis/eslint-config": "^1.0.4",
     "eslint": "^6.7.2",
-    "eslint-config-fortellis-platform": "^1.0.3",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-json": "^2.0.1",
     "eslint-plugin-promise": "^4.2.1",
@@ -37,7 +37,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm upgrade eslint-config-fortellis-platform && lint-staged"
+      "pre-commit": "npm upgrade @fortellis/eslint-config && lint-staged"
     }
   }
 }

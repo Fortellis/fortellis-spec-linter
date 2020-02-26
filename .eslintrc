@@ -1,5 +1,5 @@
 {
-  "extends": "eslint-config-fortellis-platform",
+  "extends": "@fortellis/eslint-config",
   "rules": {
     "require-atomic-updates": "off"
   }
