@@ -23,7 +23,7 @@ try {
     const deploymentSpec = {
       files: [
         {
-          pattern: `*/${filename}`,
+          pattern: `${filename}`,
           target: `npm-local/@fortellis/${filename}`
         }
       ]
