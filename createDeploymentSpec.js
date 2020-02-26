@@ -24,7 +24,7 @@ try {
       files: [
         {
           pattern: `*/${filename}`,
-          target: `npm-local/@fortellis/${filename}`
+          target: `npm-local/${filename}`
         }
       ]
     };
