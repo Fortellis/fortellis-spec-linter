@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
 const { Spectral } = require('@stoplight/spectral');
-const { getLocationForJsonPath } = require('@stoplight/yaml');
+const {
+  getLocationForJsonPath,
+  parseWithPointers
+} = require('@stoplight/yaml');
 const {
   oas2Functions,
   rules: oas2Rules
@@ -20,25 +23,32 @@ const SeverityLookup = {
   hint: DiagnosticSeverity.Hint
 };
 
-async function lint(parserResult, config) {
+async function lintRaw(rawSpec, config) {
+  return await lint(parseWithPointers(rawSpec), config);
+}
+
+async function lint(
+  parserResult,
+  { rulesets = {}, severity = SeverityLookup.error, verbose = false }
+) {
   try {
     // load functions and rules
     let functions = oas2Functions();
     let rules = await oas2Rules();
 
     // Merge the rulesets and functions since this is not supported by Spectral v5.X.X
-    if (config.rulesets['oas2-enhanced']) {
+    if (rulesets['oas2-enhanced']) {
       Object.assign(functions, oas2EnhancedFunctions);
       Object.assign(rules, oas2EnhancedRules);
     }
-    if (config.rulesets['oas2-fortellis']) {
+    if (rulesets['oas2-fortellis']) {
       Object.assign(functions, oas2FortellisFunctions);
       Object.assign(rules, oas2FortellisRules);
     }
 
     const filteredRules = filterRulesBySeverity(
       mapRulesetSeverity(rules),
-      config.severity
+      severity
     );
 
     // TODO:
@@ -57,10 +67,12 @@ async function lint(parserResult, config) {
 
     return sortResults(results);
   } catch (error) {
-    console.error({
-      message: 'linter error',
-      error: error
-    });
+    if (verbose) {
+      console.error({
+        message: 'linter error',
+        error: error
+      });
+    }
     throw { message: 'linter error', error: error };
   }
 }
@@ -106,6 +118,7 @@ function compareResult(a, b) {
 
 module.exports = {
   lint,
+  lintRaw,
   mapRuleSeverity,
   mapRulesetSeverity,
   filterRulesBySeverity,
