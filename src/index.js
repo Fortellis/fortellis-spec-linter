@@ -16,7 +16,7 @@ const _ = require('lodash');
 
 const { DiagnosticSeverity } = require('@stoplight/types');
 
-const SeverityLookup = {
+const Severity = {
   error: DiagnosticSeverity.Error,
   warn: DiagnosticSeverity.Warning,
   info: DiagnosticSeverity.Information,
@@ -29,7 +29,7 @@ async function lintRaw(rawSpec, config) {
 
 async function lint(
   parserResult,
-  { rulesets = {}, severity = SeverityLookup.error, verbose = false }
+  { rulesets = {}, severity = Severity.error, verbose = false }
 ) {
   try {
     // load functions and rules
@@ -89,14 +89,14 @@ function mapRuleSeverity(rule) {
     clone.severity = DiagnosticSeverity.Warning;
   } else if (_.isString(clone.severity)) {
     // map from string to severity code
-    clone.severity = SeverityLookup[clone.severity];
+    clone.severity = Severity[clone.severity];
   }
 
   return clone;
 }
 
 function filterRulesBySeverity(rules, severity) {
-  const max = SeverityLookup[severity];
+  const max = Severity[severity];
   if (max === void 0) throw 'invalid diagnostic severity level: ' + severity;
 
   return _.pickBy(rules, r => r.severity <= max);
@@ -119,6 +119,8 @@ function compareResult(a, b) {
 module.exports = {
   lint,
   lintRaw,
+  Severity,
+  // Exported for testing
   mapRuleSeverity,
   mapRulesetSeverity,
   filterRulesBySeverity,
