@@ -40,7 +40,7 @@ Both functions take a second argument to supply an options object. The options o
 | Key        | Type          | Description                                                                                                                                                                                                             | Default |
 | ---------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `rulesets` | object        | Define the rulesets used in the linter. Each ruleset is a key in this object.                                                                                                                                           | `{}`    |
-| `severity` | enum (number) | Determine the level of linting notice that should be returned in the results array (`error (0)`, `warn (1)`, `info (2)`, `hint (3)`). These severity levels are exported as `Severity` from `@fortellis/spec-validator` | `0`     |
+| `severity` | enum (number) | Determine the level of linting notice that should be returned in the results array (`error (0)`, `warn (1)`, `info (2)`, `hint (3)`). These severity levels are exported as `Severity` from `@fortellis/spec-validator`. | `0`     |
 | `verbose`  | boolean       | Enable/Disable logging from the linter                                                                                                                                                                                  | `false` |
 
 ### Results
