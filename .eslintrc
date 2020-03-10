@@ -1,6 +1,16 @@
 {
-  "extends": "@fortellis/eslint-config",
+  "extends": "eslint:recommended",
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "plugins": ["promise", "json"],
   "rules": {
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
     "require-atomic-updates": "off"
   }
 }
