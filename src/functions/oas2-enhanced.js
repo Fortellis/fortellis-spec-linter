@@ -17,7 +17,7 @@ const caseTypes = {
     prettyName: 'kebab-case'
   },
   upperKebabCase: {
-    regex: RegExp('^[A-Z][a-zA-Z0-9]+(?:-[A-Z][a-zA-Z0-9]+)*$'),
+    regex: RegExp('^[A-Z]+[a-z0-9]*(?:-[A-Z]+[a-z0-9]*)*$'),
     prettyName: 'Upper-Kebab-Case'
   },
   cobolCase: {

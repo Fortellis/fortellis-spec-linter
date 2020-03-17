@@ -1,0 +1,74 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Semantic Version Spec
+  description: Test specification
+basePath: /test/base/path
+schemes:
+  - https
+securityDefinitions:
+  permission-model:
+    type: oauth2
+    flow: implicit
+    authorizationUrl: https://identity.fortellis.io/oauth2/
+    scopes:
+      anonymous: Permissions to query and read parts
+paths:
+  /endpoint:
+    get:
+      summary: Endpoint
+      description: Get endpoint
+      operationId: getEndpoint
+      parameters:
+        - $ref: "#/parameters/header.Request-Id"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          $ref: "#/responses/Success"
+        '500':
+          $ref: "#/responses/InternalServerError"
+      tags:
+        - query
+parameters:
+  header.Request-Id:
+    name: Request-Id
+    in: header
+    required: true
+    type: string
+    description: A correlation ID that should be returned back to the caller to indicate the return of the given request
+responses:
+  Success:
+    description: This sends a response with all the products, their size, and their location.
+    headers:
+      Request-Id:
+        type: string
+    schema:
+      description: All of the values returned
+      type: array
+      items:
+        type: string
+  InternalServerError:
+    description: 500 - Internal Server Error
+    headers:
+      Request-Id:
+        type: string
+    schema:
+      $ref: "#/definitions/ErrorResponse"
+definitions:
+  ErrorResponse:
+    description: Common error response object.
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+    required:
+      - code
+      - message
+    example:
+      code: 400
+      message: Bad Request

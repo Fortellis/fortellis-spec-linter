@@ -29,7 +29,7 @@ async function lintRaw(rawSpec, config) {
 
 async function lint(
   parserResult,
-  { rulesets = {}, severity = Severity.error, verbose = false }
+  { rulesets = {}, severity = Severity.warn, verbose = false }
 ) {
   try {
     // load functions and rules
@@ -96,8 +96,9 @@ function mapRuleSeverity(rule) {
 }
 
 function filterRulesBySeverity(rules, severity) {
-  const max = Severity[severity];
-  if (max === void 0) throw 'invalid diagnostic severity level: ' + severity;
+  const max = severity;
+  if (!Object.values(Severity).find(s => s === severity))
+    throw `invalid diagnostic severity level: ${severity}.`;
 
   return _.pickBy(rules, r => r.severity <= max);
 }

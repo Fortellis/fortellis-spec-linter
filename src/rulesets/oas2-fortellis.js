@@ -85,6 +85,7 @@ const spat_f001 = {
 //
 // security definitions object rules
 //
+// TODO: is this description good when most specs will be yaml?
 const wsdf_f001 = {
   description: 'root spec object should declare a `securityDefinitions` object',
   recommended: true,
