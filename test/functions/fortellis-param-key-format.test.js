@@ -67,7 +67,10 @@ describe('function fortellisParamKeyFormat', function() {
       { key: 'path.foo' },
       { key: 'path.fooBar' },
       { key: 'path.fooBarBAZ' },
-      { key: 'path.fooBar123' }
+      { key: 'path.fooBar123' },
+      { key: 'path.foo123' },
+      { key: 'path.fooB' },
+      { key: 'path.FOO' }
     ];
 
     for (const t of tests) {

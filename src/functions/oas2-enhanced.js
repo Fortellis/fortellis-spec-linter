@@ -5,7 +5,7 @@ const caseTypes = {
     prettyName: 'flatcase'
   },
   camelCase: {
-    regex: RegExp('^[a-z]+[a-zA-Z0-9]*$'),
+    regex: RegExp('^[a-z]+[a-zA-Z0-9]*$|^[A-Z]+$'),
     prettyName: 'camelCase'
   },
   pascalCase: {
