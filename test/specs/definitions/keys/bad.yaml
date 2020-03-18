@@ -1,6 +1,6 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  version: '1.0.0'
+  version: "1.0.0"
   title: Semantic Version Spec
   description: Test specification
 basePath: /test/base/path
@@ -20,33 +20,19 @@ paths:
       description: Get endpoint
       operationId: getEndpoint
       parameters:
-        - $ref: '#/parameters/header.OrganizationId'
-        - $ref: '#/parameters/header.snake-header'
-        - $ref: '#/parameters/header.Request-Id'
+        - $ref: "#/parameters/header.Request-Id"
       consumes:
         - application/json
       produces:
         - application/json
       responses:
         '200':
-          $ref: '#/responses/Success'
+          $ref: "#/responses/Success"
         '500':
-          $ref: '#/responses/InternalServerError'
+          $ref: "#/responses/InternalServerError"
       tags:
         - query
 parameters:
-  header.OrganizationId:
-    name: OrganizationId
-    in: header
-    required: true
-    type: string
-    description: A Fortellis organization identifier
-  header.snake-header:
-    name: snake-header
-    in: header
-    required: true
-    type: string
-    description: snake case bad header
   header.Request-Id:
     name: Request-Id
     in: header
@@ -70,9 +56,16 @@ responses:
       Request-Id:
         type: string
     schema:
-      $ref: '#/definitions/ErrorResponse'
+      $ref: "#/definitions/Error-Response"
+  ServerError:
+    description: 500 - Internal Server Error
+    headers:
+      Request-Id:
+        type: string
+    schema:
+      $ref: "#/definitions/errorResponse"
 definitions:
-  ErrorResponse:
+  Error-Response:
     description: Common error response object.
     properties:
       code:
@@ -85,4 +78,18 @@ definitions:
       - message
     example:
       code: 400
+      message: Bad Request
+  errorResponse:
+    description: Common error response object 2.
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+    required:
+      - code
+      - message
+    example:
+      code: 401
       message: Bad Request

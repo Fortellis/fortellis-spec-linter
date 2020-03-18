@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const caseTypes = {
   flatCase: {
-    regex: RegExp('^[a-z][a-zA-Z0-9]+$'),
+    regex: RegExp('^[a-z][a-z0-9]+$'),
     prettyName: 'flatcase'
   },
   camelCase: {

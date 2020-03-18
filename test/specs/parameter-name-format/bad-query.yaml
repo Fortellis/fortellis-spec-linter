@@ -21,18 +21,32 @@ paths:
       operationId: getEndpoint
       parameters:
         - $ref: "#/parameters/header.Request-Id"
+        - $ref: "#/parameters/query.myQuery"
+        - $ref: "#/parameters/query.my-query"
       consumes:
         - application/json
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           $ref: "#/responses/Success"
-        '500':
+        "500":
           $ref: "#/responses/InternalServerError"
       tags:
         - query
 parameters:
+  query.myQuery:
+    name: myQuery
+    in: query
+    required: false
+    type: string
+    description: test query
+  query.my-query:
+    name: my-query
+    in: query
+    required: false
+    type: string
+    description: test query
   header.Request-Id:
     name: Request-Id
     in: header

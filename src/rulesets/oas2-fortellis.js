@@ -126,7 +126,7 @@ const wpar_f001 = {
   // This rule validates that parameter object keys match:
   //
   //  'header.Upper-Kebab-Case',
-  //  'path.kebab-case',
+  //  'path.camelCase',
   //  'query.flatcase',
   //  'body.PascalCase'
   //

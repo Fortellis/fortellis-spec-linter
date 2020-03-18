@@ -21,6 +21,8 @@ paths:
       operationId: getEndpoint
       parameters:
         - $ref: "#/parameters/header.Request-Id"
+        - $ref: "#/parameters/body.camelBody"
+        - $ref: "#/parameters/body.snake-body"
       consumes:
         - application/json
       produces:
@@ -39,6 +41,18 @@ parameters:
     required: true
     type: string
     description: A correlation ID that should be returned back to the caller to indicate the return of the given request
+  body.camelBody:
+    name: camelBody
+    in: body
+    required: true
+    type: string
+    description: camel case body parameter
+  body.snake-body:
+    name: snake-body
+    in: body
+    required: true
+    type: string
+    description: snake case body parameter
 responses:
   Success:
     description: This sends a response with all the products, their size, and their location.

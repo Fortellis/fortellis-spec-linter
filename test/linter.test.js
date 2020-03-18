@@ -1,6 +1,7 @@
 const { DiagnosticSeverity } = require('@stoplight/types');
 
 const {
+  Severity,
   filterRulesBySeverity,
   sortResults,
   mapRuleSeverity,
@@ -57,7 +58,7 @@ describe('mapRuleSeverity', function() {
   });
 });
 
-describe('mapRulesetSeverity', async function() {
+describe('mapRulesetSeverity', function() {
   const testRuleset = {
     a: { severity: 'error' },
     b: { severity: 'warn' },
@@ -79,7 +80,7 @@ describe('mapRulesetSeverity', async function() {
   });
 });
 
-describe('filterRulesBySeverity', async function() {
+describe('filterRulesBySeverity', function() {
   const testRules = {
     a: { severity: DiagnosticSeverity.Error },
     b: { severity: DiagnosticSeverity.Warning },
@@ -88,7 +89,7 @@ describe('filterRulesBySeverity', async function() {
   };
 
   it('should return only rules with severity == `error`', async function() {
-    const filteredRules = filterRulesBySeverity(testRules, 'error');
+    const filteredRules = filterRulesBySeverity(testRules, Severity.error);
     const expected = {
       a: { severity: DiagnosticSeverity.Error }
     };
@@ -97,7 +98,7 @@ describe('filterRulesBySeverity', async function() {
   });
 
   it('should return only rules with severity >= `warn`', async function() {
-    const filteredRules = filterRulesBySeverity(testRules, 'warn');
+    const filteredRules = filterRulesBySeverity(testRules, Severity.warn);
     const expected = {
       a: { severity: DiagnosticSeverity.Error },
       b: { severity: DiagnosticSeverity.Warning }
@@ -107,7 +108,7 @@ describe('filterRulesBySeverity', async function() {
   });
 
   it('should return only rules with severity >= `information`', async function() {
-    const filteredRules = filterRulesBySeverity(testRules, 'info');
+    const filteredRules = filterRulesBySeverity(testRules, Severity.info);
     const expected = {
       a: { severity: DiagnosticSeverity.Error },
       b: { severity: DiagnosticSeverity.Warning },
@@ -118,7 +119,7 @@ describe('filterRulesBySeverity', async function() {
   });
 
   it('should return only rules with severity >= `hint`', async function() {
-    const filteredRules = filterRulesBySeverity(testRules, 'hint');
+    const filteredRules = filterRulesBySeverity(testRules, Severity.hint);
     const expected = {
       a: { severity: DiagnosticSeverity.Error },
       b: { severity: DiagnosticSeverity.Warning },
@@ -130,7 +131,7 @@ describe('filterRulesBySeverity', async function() {
   });
 });
 
-describe('sortResults', async function() {
+describe('sortResults', function() {
   it('should sort results by descending severity level`', async function() {
     const testResults = [
       { severity: DiagnosticSeverity.Warning },

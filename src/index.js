@@ -97,7 +97,8 @@ function mapRuleSeverity(rule) {
 
 function filterRulesBySeverity(rules, severity) {
   const max = severity;
-  if (!Object.values(Severity).find(s => s === severity))
+  // Only allow severity levels defined in Severity enum
+  if (Object.values(Severity).find(s => s === severity) === undefined)
     throw `invalid diagnostic severity level: ${severity}.`;
 
   return _.pickBy(rules, r => r.severity <= max);

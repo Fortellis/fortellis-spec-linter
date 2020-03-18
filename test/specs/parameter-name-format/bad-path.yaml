@@ -1,6 +1,6 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  version: "1.0.0"
+  version: '1.0.0'
   title: Semantic Version Spec
   description: Test specification
 basePath: /test/base/path
@@ -14,25 +14,51 @@ securityDefinitions:
     scopes:
       anonymous: Permissions to query and read parts
 paths:
-  /endpoint/{endpoint-id}:
+  /endpoint/{EndpointId}:
     get:
       summary: Endpoint
       description: Get endpoint
       operationId: getEndpoint
       parameters:
-        - $ref: "#/parameters/header.Request-Id"
+        - $ref: '#/parameters/path.EndpointId'
+        - $ref: '#/parameters/header.Request-Id'
       consumes:
         - application/json
       produces:
         - application/json
       responses:
         '200':
-          $ref: "#/responses/Success"
+          $ref: '#/responses/Success'
         '500':
-          $ref: "#/responses/InternalServerError"
+          $ref: '#/responses/InternalServerError'
+      tags:
+        - query
+  /endpoint/another/{endpoint-id}:
+    get:
+      summary: Endpoint
+      description: Get endpoint
+      operationId: getEndpoint
+      parameters:
+        - $ref: '#/parameters/path.endpoint-id'
+        - $ref: '#/parameters/header.Request-Id'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          $ref: '#/responses/Success'
+        '500':
+          $ref: '#/responses/InternalServerError'
       tags:
         - query
 parameters:
+  path.EndpointId:
+    name: EndpointId
+    in: path
+    description: id for the endpoint
+    required: true
+    type: string
   path.endpoint-id:
     name: endpoint-id
     in: path
@@ -62,7 +88,7 @@ responses:
       Request-Id:
         type: string
     schema:
-      $ref: "#/definitions/ErrorResponse"
+      $ref: '#/definitions/ErrorResponse'
 definitions:
   ErrorResponse:
     description: Common error response object.

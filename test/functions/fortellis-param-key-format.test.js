@@ -99,7 +99,7 @@ describe('function fortellisParamKeyFormat', function() {
     }
   });
 
-  it('should fail if the `query` parameter object key suffix is not camelCase', async function() {
+  it('should fail if the `query` parameter object key suffix is not flatcase', async function() {
     const tests = [
       { key: 'query.foo-bar' },
       { key: 'query.foo_bar' },
@@ -112,7 +112,7 @@ describe('function fortellisParamKeyFormat', function() {
       expect(result).toEqual([
         {
           message:
-            'suffix is incorrect case. The suffix of `query` parameter objects should be `camelCase`'
+            'suffix is incorrect case. The suffix of `query` parameter objects should be `flatcase`'
         }
       ]);
     }

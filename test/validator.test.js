@@ -4,113 +4,81 @@ const { lintRaw } = require('../src');
 
 const DEFAULT_OPTIONS = {
   rulesets: {
+    // TODO: function casing not included when enhanced not used
+    'oas2-enhanced': true,
     'oas2-fortellis': true
   }
 };
 
+async function runTest(filePath, options = DEFAULT_OPTIONS) {
+  const bad = fs.readFileSync(path.join(__dirname, filePath), 'utf8');
+
+  return await lintRaw(bad, options);
+}
+
 describe('Fortellis Spec Validator', () => {
+  // TODO: make master have all rules
+  test('Validates Valid Master Spec', async () => {
+    const response = await runTest('/specs/master.yaml');
+    expect(response).toEqual([]);
+  });
+
   describe('Fortellis Ruleset', () => {
     test('Semantic Versioning', async () => {
-      const good = fs.readFileSync(
-        path.join(__dirname, '/specs/semantic-version/good.yaml'),
-        'utf8'
-      );
-      const bad = fs.readFileSync(
-        path.join(__dirname, '/specs/semantic-version/bad.yaml'),
-        'utf8'
-      );
+      const response = await runTest('/specs/semantic-version/bad.yaml');
 
-      const responseGood = await lintRaw(good, DEFAULT_OPTIONS);
-      const responseBad = await lintRaw(bad, DEFAULT_OPTIONS);
-      // Good
-      expect(responseGood).toEqual([]);
-      // Bad
-      expect(responseBad).toHaveLength(1);
-      expect(responseBad[0].code).toEqual('einf_f001');
-      expect(responseBad[0].message).toEqual(
+      expect(response).toHaveLength(1);
+      expect(response[0].code).toEqual('einf_f001');
+      expect(response[0].message).toEqual(
         'the version should follow semantic versioning: {major-nnumber}.{minor-number}.{patch-number}'
       );
     });
 
     test('Path Key Kebab Case', async () => {
-      const good = fs.readFileSync(
-        path.join(__dirname, '/specs/path-key-kebab/good.yaml'),
-        'utf8'
-      );
       // TODO: improve test specs for more cases like path params
-      const bad = fs.readFileSync(
-        path.join(__dirname, '/specs/path-key-kebab/bad.yaml'),
-        'utf8'
-      );
+      const response = await runTest('/specs/path-key-kebab/bad.yaml');
 
-      const responseGood = await lintRaw(good, DEFAULT_OPTIONS);
-      const responseBad = await lintRaw(bad, DEFAULT_OPTIONS);
-      // Good
-      expect(responseGood).toEqual([]);
-      // Bad
-      expect(responseBad).toHaveLength(1);
-      expect(responseBad[0].code).toEqual('spat_f001');
-      expect(responseBad[0].message).toEqual(
+      expect(response).toHaveLength(1);
+      expect(response[0].code).toEqual('spat_f001');
+      expect(response[0].message).toEqual(
         'path segment `endpointCamel` should be `kebab-case`'
       );
     });
 
     test('Security Definitions', async () => {
-      const good = fs.readFileSync(
-        path.join(__dirname, '/specs/security-definitions/good.yaml'),
-        'utf8'
-      );
-      const bad = fs.readFileSync(
-        path.join(__dirname, '/specs/security-definitions/bad.yaml'),
-        'utf8'
-      );
+      const response = await runTest('/specs/security-definitions/bad.yaml');
 
-      const responseGood = await lintRaw(good, DEFAULT_OPTIONS);
-      const responseBad = await lintRaw(bad, DEFAULT_OPTIONS);
-      // Good
-      expect(responseGood).toEqual([]);
-      // Bad
-      expect(responseBad).toHaveLength(1);
-      expect(responseBad[0].code).toEqual('wsdf_f001');
-      expect(responseBad[0].message).toEqual(
+      expect(response).toHaveLength(1);
+      expect(response[0].code).toEqual('wsdf_f001');
+      expect(response[0].message).toEqual(
         'root spec object should declare a `securityDefinitions` object'
       );
     });
 
     test('Operation Request ID', async () => {
-      const good = fs.readFileSync(
-        path.join(__dirname, '/specs/operation-request-id/good.yaml'),
-        'utf8'
-      );
-      const bad = fs.readFileSync(
-        path.join(__dirname, '/specs/operation-request-id/bad.yaml'),
-        'utf8'
-      );
+      const response = await runTest('/specs/operation-request-id/bad.yaml');
 
-      const responseGood = await lintRaw(good, DEFAULT_OPTIONS);
-      const responseBad = await lintRaw(bad, DEFAULT_OPTIONS);
-      // Good
-      expect(responseGood).toEqual([]);
-      // Bad
-      expect(responseBad).toHaveLength(1);
-      expect(responseBad[0].code).toEqual('wop_f001');
-      expect(responseBad[0].message).toEqual(
+      expect(response).toHaveLength(1);
+      expect(response[0].code).toEqual('wop_f001');
+      expect(response[0].message).toEqual(
         'operation objects must declare a `Request-Id` header parameter'
       );
     });
 
     describe('Parameter Name Format', () => {
       test('Header: Upper Kebab Case', async () => {
-        const bad = fs.readFileSync(
-          path.join(__dirname, '/specs/parameter-name-format/bad-header.yaml'),
-          'utf8'
+        const response = await runTest(
+          '/specs/parameter-name-format/bad-header.yaml'
         );
 
-        const response = await lintRaw(bad, DEFAULT_OPTIONS);
-        expect(response).toHaveLength(2);
+        expect(response).toHaveLength(4);
         // Key
         expect(response[0].code).toEqual('wpar_f001');
         expect(response[0].message).toEqual(
+          'suffix is incorrect case. The suffix of `header` parameter objects should be `Upper-Kebab-Case`'
+        );
+        expect(response[2].code).toEqual('wpar_f001');
+        expect(response[2].message).toEqual(
           'suffix is incorrect case. The suffix of `header` parameter objects should be `Upper-Kebab-Case`'
         );
         // Name
@@ -118,27 +86,141 @@ describe('Fortellis Spec Validator', () => {
         expect(response[1].message).toEqual(
           'the `name` property of `header` parameter objects should be `Upper-Kebab-Case`'
         );
+        expect(response[3].code).toEqual('wpar_f002');
+        expect(response[3].message).toEqual(
+          'the `name` property of `header` parameter objects should be `Upper-Kebab-Case`'
+        );
+      });
+
+      test('Path: Camel Case', async () => {
+        const response = await runTest(
+          '/specs/parameter-name-format/bad-path.yaml'
+        );
+
+        expect(response).toHaveLength(4);
+        // Key
+        expect(response[0].code).toEqual('wpar_f001');
+        expect(response[0].message).toEqual(
+          'suffix is incorrect case. The suffix of `path` parameter objects should be `camelCase`'
+        );
+        expect(response[2].code).toEqual('wpar_f001');
+        expect(response[2].message).toEqual(
+          'suffix is incorrect case. The suffix of `path` parameter objects should be `camelCase`'
+        );
+        // Name
+        expect(response[1].code).toEqual('wpar_f002');
+        expect(response[1].message).toEqual(
+          'the `name` property of `path` parameter objects should be `camelCase`'
+        );
+        expect(response[3].code).toEqual('wpar_f002');
+        expect(response[3].message).toEqual(
+          'the `name` property of `path` parameter objects should be `camelCase`'
+        );
+      });
+
+      test('Query: Flat Case', async () => {
+        const response = await runTest(
+          '/specs/parameter-name-format/bad-query.yaml'
+        );
+
+        expect(response).toHaveLength(4);
+        // Key
+        expect(response[0].code).toEqual('wpar_f001');
+        expect(response[0].message).toEqual(
+          'suffix is incorrect case. The suffix of `query` parameter objects should be `flatcase`'
+        );
+        expect(response[2].code).toEqual('wpar_f001');
+        expect(response[2].message).toEqual(
+          'suffix is incorrect case. The suffix of `query` parameter objects should be `flatcase`'
+        );
+        // Name
+        expect(response[1].code).toEqual('wpar_f002');
+        expect(response[1].message).toEqual(
+          'the `name` property of `query` parameter objects should be `flatcase`'
+        );
+        expect(response[3].code).toEqual('wpar_f002');
+        expect(response[3].message).toEqual(
+          'the `name` property of `query` parameter objects should be `flatcase`'
+        );
+      });
+
+      test('Body: Pascal Case', async () => {
+        const response = await runTest(
+          '/specs/parameter-name-format/bad-body.yaml'
+        );
+
+        expect(response).toHaveLength(4);
+        // Key
+        expect(response[0].code).toEqual('wpar_f001');
+        expect(response[0].message).toEqual(
+          'suffix is incorrect case. The suffix of `body` parameter objects should be `PascalCase`'
+        );
+        expect(response[2].code).toEqual('wpar_f001');
+        expect(response[2].message).toEqual(
+          'suffix is incorrect case. The suffix of `body` parameter objects should be `PascalCase`'
+        );
+        // Name
+        expect(response[1].code).toEqual('wpar_f002');
+        expect(response[1].message).toEqual(
+          'the `name` property of `body` parameter objects should be `PascalCase`'
+        );
+        expect(response[3].code).toEqual('wpar_f002');
+        expect(response[3].message).toEqual(
+          'the `name` property of `body` parameter objects should be `PascalCase`'
+        );
       });
     });
 
-    test('Path: Camel Case', async () => {
-      const bad = fs.readFileSync(
-        path.join(__dirname, '/specs/parameter-name-format/bad-path.yaml'),
-        'utf8'
-      );
+    test('Response Request ID', async () => {
+      const response = await runTest('/specs/response-request-id/bad.yaml');
 
-      const response = await lintRaw(bad, DEFAULT_OPTIONS);
-      expect(response).toHaveLength(2);
-      // Key
-      expect(response[0].code).toEqual('wpar_f001');
+      expect(response).toHaveLength(1);
+      expect(response[0].code).toEqual('wres_f001');
       expect(response[0].message).toEqual(
-        'suffix is incorrect case. The suffix of `path` parameter objects should be `camelCase`'
+        'responses should include a `Request-Id` header'
       );
-      // Name
-      expect(response[1].code).toEqual('wpar_f002');
-      expect(response[1].message).toEqual(
-        'the `name` property of `path` parameter objects should be `camelCase`'
-      );
+    });
+
+    describe('Definitions Rules', () => {
+      test('Example Required', async () => {
+        const response = await runTest('/specs/definitions/example/bad.yaml');
+
+        expect(response).toHaveLength(1);
+        expect(response[0].code).toEqual('edef_f001');
+        expect(response[0].message).toEqual(
+          'defintion objects should include an `example` property'
+        );
+      });
+
+      test('Keys Casing', async () => {
+        const response = await runTest('/specs/definitions/keys/bad.yaml');
+
+        expect(response).toHaveLength(2);
+        expect(response[0].code).toEqual('sdef_f001');
+        expect(response[0].message).toEqual(
+          'defintion object keys should be PascalCase'
+        );
+        expect(response[1].code).toEqual('sdef_f001');
+        expect(response[1].message).toEqual(
+          'defintion object keys should be PascalCase'
+        );
+      });
+
+      test('Properties Casing', async () => {
+        const response = await runTest(
+          '/specs/definitions/properties/bad.yaml'
+        );
+
+        expect(response).toHaveLength(2);
+        expect(response[0].code).toEqual('sdef_f002');
+        expect(response[0].message).toEqual(
+          'defintion object property names should be camelCase'
+        );
+        expect(response[1].code).toEqual('sdef_f002');
+        expect(response[1].message).toEqual(
+          'defintion object property names should be camelCase'
+        );
+      });
     });
   });
 });

@@ -14,13 +14,13 @@ securityDefinitions:
     scopes:
       anonymous: Permissions to query and read parts
 paths:
-  /endpoint-kebab:
+  /endpoint:
     get:
       summary: Endpoint
       description: Get endpoint
       operationId: getEndpoint
       parameters:
-        - $ref: "#/parameters/header.Request-Id"
+        - $ref: '#/parameters/header.Request-Id'
       consumes:
         - application/json
       produces:
@@ -43,8 +43,6 @@ responses:
   Success:
     description: This sends a response with all the products, their size, and their location.
     headers:
-      Request-Id:
-        type: string
     schema:
       description: All of the values returned
       type: array
@@ -52,9 +50,6 @@ responses:
         type: string
   InternalServerError:
     description: 500 - Internal Server Error
-    headers:
-      Request-Id:
-        type: string
     schema:
       $ref: "#/definitions/ErrorResponse"
 definitions:

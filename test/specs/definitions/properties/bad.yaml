@@ -57,14 +57,21 @@ responses:
         type: string
     schema:
       $ref: "#/definitions/ErrorResponse"
+  ServerError:
+    description: 500 - Internal Server Error
+    headers:
+      Request-Id:
+        type: string
+    schema:
+      $ref: "#/definitions/ErrorResponse"
 definitions:
   ErrorResponse:
     description: Common error response object.
     properties:
-      code:
+      code-name:
         type: integer
         format: int32
-      message:
+      MessageString:
         type: string
     required:
       - code

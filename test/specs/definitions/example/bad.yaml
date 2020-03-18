@@ -69,6 +69,3 @@ definitions:
     required:
       - code
       - message
-    example:
-      code: 400
-      message: Bad Request
