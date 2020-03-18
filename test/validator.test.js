@@ -4,7 +4,8 @@ const { lintRaw } = require('../src');
 
 const DEFAULT_OPTIONS = {
   rulesets: {
-    // TODO: function casing not included when enhanced not used
+    // TODO: function casing not included when enhanced not used although it's referenced
+    // in oas2-fortellis
     'oas2-enhanced': true,
     'oas2-fortellis': true
   }
@@ -17,7 +18,6 @@ async function runTest(filePath, options = DEFAULT_OPTIONS) {
 }
 
 describe('Fortellis Spec Validator', () => {
-  // TODO: make master have all rules
   test('Validates Valid Master Spec', async () => {
     const response = await runTest('/specs/master.yaml');
     expect(response).toEqual([]);
@@ -35,13 +35,20 @@ describe('Fortellis Spec Validator', () => {
     });
 
     test('Path Key Kebab Case', async () => {
-      // TODO: improve test specs for more cases like path params
       const response = await runTest('/specs/path-key-kebab/bad.yaml');
 
-      expect(response).toHaveLength(1);
+      expect(response).toHaveLength(3);
       expect(response[0].code).toEqual('spat_f001');
       expect(response[0].message).toEqual(
         'path segment `endpointCamel` should be `kebab-case`'
+      );
+      expect(response[1].code).toEqual('spat_f001');
+      expect(response[1].message).toEqual(
+        'path segment `Bad-Endpoint` should be `kebab-case`'
+      );
+      expect(response[2].code).toEqual('spat_f001');
+      expect(response[2].message).toEqual(
+        'path segment `BadEndpoint` should be `kebab-case`'
       );
     });
 

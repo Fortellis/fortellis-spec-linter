@@ -32,6 +32,42 @@ paths:
           $ref: "#/responses/InternalServerError"
       tags:
         - query
+  /endpoint/Bad-Endpoint:
+    get:
+      summary: Endpoint
+      description: Get endpoint
+      operationId: getEndpoint
+      parameters:
+        - $ref: "#/parameters/header.Request-Id"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          $ref: "#/responses/Success"
+        '500':
+          $ref: "#/responses/InternalServerError"
+      tags:
+        - query
+  /endpoint/{goodPathParam}/BadEndpoint:
+    get:
+      summary: Endpoint
+      description: Get endpoint
+      operationId: getEndpoint
+      parameters:
+        - $ref: "#/parameters/header.Request-Id"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          $ref: "#/responses/Success"
+        '500':
+          $ref: "#/responses/InternalServerError"
+      tags:
+        - query
 parameters:
   header.Request-Id:
     name: Request-Id
