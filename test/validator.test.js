@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { lintRaw } = require('../src');
+const { lintRaw, Severity } = require('../src');
 
 const DEFAULT_OPTIONS = {
   rulesets: {
@@ -18,14 +18,16 @@ async function runTest(filePath, options = DEFAULT_OPTIONS) {
 }
 
 describe('Fortellis Spec Validator', () => {
-  test('Validates Valid Master Spec', async () => {
-    const response = await runTest('/specs/master.yaml');
-    expect(response).toEqual([]);
-  });
-
   describe('Fortellis Ruleset', () => {
+    test('Validates Valid Master Spec', async () => {
+      const response = await runTest('/specs/oas2-fortellis/master.yaml');
+      expect(response).toEqual([]);
+    });
+
     test('Semantic Versioning', async () => {
-      const response = await runTest('/specs/semantic-version/bad.yaml');
+      const response = await runTest(
+        '/specs/oas2-fortellis/semantic-version/bad.yaml'
+      );
 
       expect(response).toHaveLength(1);
       expect(response[0].code).toEqual('einf_f001');
@@ -35,7 +37,9 @@ describe('Fortellis Spec Validator', () => {
     });
 
     test('Path Key Kebab Case', async () => {
-      const response = await runTest('/specs/path-key-kebab/bad.yaml');
+      const response = await runTest(
+        '/specs/oas2-fortellis/path-key-kebab/bad.yaml'
+      );
 
       expect(response).toHaveLength(3);
       expect(response[0].code).toEqual('spat_f001');
@@ -53,7 +57,9 @@ describe('Fortellis Spec Validator', () => {
     });
 
     test('Security Definitions', async () => {
-      const response = await runTest('/specs/security-definitions/bad.yaml');
+      const response = await runTest(
+        '/specs/oas2-fortellis/security-definitions/bad.yaml'
+      );
 
       expect(response).toHaveLength(1);
       expect(response[0].code).toEqual('wsdf_f001');
@@ -63,7 +69,9 @@ describe('Fortellis Spec Validator', () => {
     });
 
     test('Operation Request ID', async () => {
-      const response = await runTest('/specs/operation-request-id/bad.yaml');
+      const response = await runTest(
+        '/specs/oas2-fortellis/operation-request-id/bad.yaml'
+      );
 
       expect(response).toHaveLength(1);
       expect(response[0].code).toEqual('wop_f001');
@@ -75,7 +83,7 @@ describe('Fortellis Spec Validator', () => {
     describe('Parameter Name Format', () => {
       test('Header: Upper Kebab Case', async () => {
         const response = await runTest(
-          '/specs/parameter-name-format/bad-header.yaml'
+          '/specs/oas2-fortellis/parameter-name-format/bad-header.yaml'
         );
 
         expect(response).toHaveLength(4);
@@ -101,7 +109,7 @@ describe('Fortellis Spec Validator', () => {
 
       test('Path: Camel Case', async () => {
         const response = await runTest(
-          '/specs/parameter-name-format/bad-path.yaml'
+          '/specs/oas2-fortellis/parameter-name-format/bad-path.yaml'
         );
 
         expect(response).toHaveLength(4);
@@ -127,7 +135,7 @@ describe('Fortellis Spec Validator', () => {
 
       test('Query: Flat Case', async () => {
         const response = await runTest(
-          '/specs/parameter-name-format/bad-query.yaml'
+          '/specs/oas2-fortellis/parameter-name-format/bad-query.yaml'
         );
 
         expect(response).toHaveLength(4);
@@ -153,7 +161,7 @@ describe('Fortellis Spec Validator', () => {
 
       test('Body: Pascal Case', async () => {
         const response = await runTest(
-          '/specs/parameter-name-format/bad-body.yaml'
+          '/specs/oas2-fortellis/parameter-name-format/bad-body.yaml'
         );
 
         expect(response).toHaveLength(4);
@@ -179,7 +187,9 @@ describe('Fortellis Spec Validator', () => {
     });
 
     test('Response Request ID', async () => {
-      const response = await runTest('/specs/response-request-id/bad.yaml');
+      const response = await runTest(
+        '/specs/oas2-fortellis/response-request-id/bad.yaml'
+      );
 
       expect(response).toHaveLength(1);
       expect(response[0].code).toEqual('wres_f001');
@@ -190,7 +200,9 @@ describe('Fortellis Spec Validator', () => {
 
     describe('Definitions Rules', () => {
       test('Example Required', async () => {
-        const response = await runTest('/specs/definitions/example/bad.yaml');
+        const response = await runTest(
+          '/specs/oas2-fortellis/definitions/example/bad.yaml'
+        );
 
         expect(response).toHaveLength(1);
         expect(response[0].code).toEqual('edef_f001');
@@ -200,7 +212,9 @@ describe('Fortellis Spec Validator', () => {
       });
 
       test('Keys Casing', async () => {
-        const response = await runTest('/specs/definitions/keys/bad.yaml');
+        const response = await runTest(
+          '/specs/oas2-fortellis/definitions/keys/bad.yaml'
+        );
 
         expect(response).toHaveLength(2);
         expect(response[0].code).toEqual('sdef_f001');
@@ -215,7 +229,7 @@ describe('Fortellis Spec Validator', () => {
 
       test('Properties Casing', async () => {
         const response = await runTest(
-          '/specs/definitions/properties/bad.yaml'
+          '/specs/oas2-fortellis/definitions/properties/bad.yaml'
         );
 
         expect(response).toHaveLength(2);
@@ -227,6 +241,39 @@ describe('Fortellis Spec Validator', () => {
         expect(response[1].message).toEqual(
           'defintion object property names should be camelCase'
         );
+      });
+    });
+  });
+
+  describe('OAS2 Enhanced Ruleset', () => {
+    describe('Description Field', () => {
+      test('Description Exists', async () => {
+        const response = await runTest('/specs/oas2/description/bad.yaml');
+
+        expect(response).toHaveLength(1);
+        expect(response[0].code).toEqual('winf001');
+        expect(response[0].message).toEqual(
+          'the info object should declare a `description` property'
+        );
+        expect(response[0].severity).toBe(Severity.warn);
+      });
+
+      test('Multiline Description', async () => {
+        const response = await runTest(
+          '/specs/oas2/description/bad-indentation.yaml'
+        );
+
+        expect(response).toHaveLength(2);
+        expect(response[0].code).toEqual('parser');
+        expect(response[0].message).toEqual(
+          'Bad indentation of a mapping entry'
+        );
+        expect(response[0].severity).toBe(Severity.error);
+        expect(response[1].code).toEqual('parser');
+        expect(response[1].message).toEqual(
+          'Can not read a block mapping entry; a multiline key may not be an implicit key'
+        );
+        expect(response[1].severity).toBe(Severity.error);
       });
     });
   });

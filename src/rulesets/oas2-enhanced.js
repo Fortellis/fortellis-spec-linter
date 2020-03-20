@@ -1,28 +1,26 @@
-//
-// rule naming scheme: {severity}{type}{id}
-//
-// {severity}: must be one of the following values:
-//   e - error
-//   w - warning
-//   i - info
-//   h - hint
-//
-// {type}: must be one of the following values:
-//   s   - root spec object
-//   inf - info object
-//   con - contact object
-//   lic - license object
-//   par - parameter object
-//   res - response object
-//   op  - operation object
-//   def - definition object
-//
-// {id}: unsigned integer value
-//
+/**
+ * rule naming scheme: {severity}{type}{id}
+ *
+ * {severity}: must be one of the following values:
+ *   e - error
+ *   w - warning
+ *   i - info
+ *   h - hint
+ *
+ * {type}: must be one of the following values:
+ *   s   - root spec object
+ *   inf - info object
+ *   con - contact object
+ *   lic - license object
+ *   par - parameter object
+ *   res - response object
+ *   op  - operation object
+ *   def - definition object
+ *
+ * {id}: unsigned integer value
+ */
 
-//
 // root spec object rules
-//
 const ws001 = {
   description: 'root spec object should declare a `parameters` property',
   recommended: true,
@@ -35,9 +33,7 @@ const ws001 = {
   }
 };
 
-//
 // Verify the root object declares a `definitions` object
-//
 const ws002 = {
   description: 'root object should declare a `responses` property',
   recommended: true,
@@ -50,9 +46,7 @@ const ws002 = {
   }
 };
 
-//
 // Verify the root object declares a `definitions` property
-//
 const ws003 = {
   description: 'root object should declare a `definitions` property',
   recommended: true,
@@ -65,9 +59,7 @@ const ws003 = {
   }
 };
 
-//
-// info object rules
-//
+// Info object rules
 const winf001 = {
   description: 'the info object should declare a `description` property',
   recommended: true,
@@ -92,9 +84,7 @@ const winf001 = {
 // pathItem object rules
 //
 
-//
 // operationObject rules
-//
 const eop001 = {
   description: 'operation objects should declare a `produces` property.',
   recommended: true,
@@ -155,9 +145,7 @@ const wop003 = {
   }
 };
 
-//
 // parameter object rules
-//
 const wpar001 = {
   description: 'parameters should declare a `description` property',
   recommended: true,
@@ -170,9 +158,7 @@ const wpar001 = {
   }
 };
 
-//
 // response object rules
-//
 const wres001 = {
   description: 'responses should declare a `description` property',
   recommended: true,
@@ -185,9 +171,7 @@ const wres001 = {
   }
 };
 
-//
 // defintion object rules
-//
 const wdef001 = {
   description: 'definition objects should declare a `description` property.',
   recommended: true,
