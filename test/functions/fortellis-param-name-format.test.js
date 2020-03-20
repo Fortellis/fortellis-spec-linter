@@ -89,11 +89,10 @@ describe('function fortellisParamNameFormat', function() {
     }
   });
 
-  it('should pass if the `name` property of `query` parameter objects is `camelCase`', async function() {
+  it('should pass if the `name` property of `query` parameter objects is `flatcase`', async function() {
     const tests = [
       { name: 'foo', in: 'query' },
-      { name: 'fooBar', in: 'query' },
-      { name: 'fooBarBAZ', in: 'query' },
+      { name: 'foobar', in: 'query' },
       { name: 'foo123', in: 'query' }
     ];
 
@@ -103,7 +102,7 @@ describe('function fortellisParamNameFormat', function() {
     }
   });
 
-  it('should fail if the `name` property of `query` parameter objects is not `camelCase`', async function() {
+  it('should fail if the `name` property of `query` parameter objects is not `flatcase`', async function() {
     const tests = [
       { name: 'Foo', in: 'query' },
       { name: 'foo-bar', in: 'query' },
@@ -115,7 +114,7 @@ describe('function fortellisParamNameFormat', function() {
       expect(result).toEqual([
         {
           message:
-            'the `name` property of `query` parameter objects should be `camelCase`'
+            'the `name` property of `query` parameter objects should be `flatcase`'
         }
       ]);
     }

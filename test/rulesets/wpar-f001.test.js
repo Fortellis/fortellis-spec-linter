@@ -15,7 +15,7 @@ describe('rule wpar_f001', () => {
       parameters: {
         'header.Foo-Bar': {},
         'path.fooBar': {},
-        'query.fooBar': {},
+        'query.foobar': {},
         'body.FooBar': {}
       }
     });

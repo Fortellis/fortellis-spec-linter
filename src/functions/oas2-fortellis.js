@@ -4,7 +4,7 @@ const { caseTypes } = require('./oas2-enhanced');
 const parameterNameCasing = {
   header: caseTypes.upperKebabCase,
   path: caseTypes.camelCase,
-  query: caseTypes.camelCase,
+  query: caseTypes.flatCase,
   body: caseTypes.pascalCase
 };
 

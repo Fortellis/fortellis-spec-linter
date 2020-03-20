@@ -22,7 +22,7 @@ describe('rule wpar_f002', () => {
           in: 'path'
         },
         'query.foobar': {
-          name: 'fooBar',
+          name: 'foobar',
           in: 'query'
         },
         'body.FooBar': {
@@ -71,7 +71,7 @@ describe('rule wpar_f002', () => {
           }
         },
         expected:
-          'the `name` property of `query` parameter objects should be `camelCase`'
+          'the `name` property of `query` parameter objects should be `flatcase`'
       },
       {
         input: {

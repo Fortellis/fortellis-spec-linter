@@ -1,33 +1,30 @@
 /* eslint-disable no-useless-escape */
+/**
+ * rule naming scheme: {severity}{type}_f{id}
+ *
+ * {severity}: must be one of the following values:
+ *   e - error
+ *   w - warning
+ *   i - info
+ *   h - hint
+ *
+ * {type}: must be one of the following values:
+ *   s   - root spec object
+ *   inf - info object
+ *   sdf - security defintion object
+ *   sch - security scheme object
+ *   scp - security scope object
+ *   par - parameter object
+ *   res - response object
+ *   pat - path object
+ *   op  - operation object
+ *   def - definition object
+ *
+ * {id}: unsigned integer value
+ */
 
-//
-// rule naming scheme: {severity}{type}_f{id}
-//
-// {severity}: must be one of the following values:
-//   e - error
-//   w - warning
-//   i - info
-//   h - hint
-//
-// {type}: must be one of the following values:
-//   s   - root spec object
-//   inf - info object
-//   sdf - security defintion object
-//   sch - security scheme object
-//   scp - security scope object
-//   par - parameter object
-//   res - response object
-//   pat - path object
-//   op  - operation object
-//   def - definition object
-//
-// {id}: unsigned integer value
-//
-
-//
 // root spec object rules
-//
-// todo:
+// TODO:
 //   - host?
 //   - basePath?
 //   - schemes?
@@ -35,10 +32,8 @@
 //   - produces?
 //
 
-//
 // info object rules
-//
-// todo:
+// TODO:
 //   - title?
 //   - description -> see oas2_enhanced
 //   - termsOfService?
@@ -65,9 +60,7 @@ const einf_f001 = {
 
 // produces
 
-//
 // path object rules
-//
 const spat_f001 = {
   //
   // Path key segments should be kebab-case.  Ignores path parameters.
@@ -82,9 +75,8 @@ const spat_f001 = {
   }
 };
 
-//
 // security definitions object rules
-//
+// TODO: is this description good when most specs will be yaml?
 const wsdf_f001 = {
   description: 'root spec object should declare a `securityDefinitions` object',
   recommended: true,
@@ -97,9 +89,7 @@ const wsdf_f001 = {
   }
 };
 
-//
 // operationObject rules
-//
 const wop_f001 = {
   //
   // Operation objects must declare a `Request-Id` header parameter.
@@ -117,15 +107,13 @@ const wop_f001 = {
   }
 };
 
-//
 // parameter object rules
-//
 const wpar_f001 = {
   //
   // This rule validates that parameter object keys match:
   //
   //  'header.Upper-Kebab-Case',
-  //  'path.kebab-case',
+  //  'path.camelCase',
   //  'query.flatcase',
   //  'body.PascalCase'
   //
@@ -157,9 +145,7 @@ const wpar_f002 = {
   }
 };
 
-//
 // response object rules
-//
 const wres_f001 = {
   description: 'responses should include a `Request-Id` header',
   recommended: true,
@@ -180,9 +166,7 @@ const wres_f001 = {
 
 // external docs
 
-//
 // defintion object rules
-//
 const edef_f001 = {
   description: 'defintion objects should include an `example` property',
   recommended: true,
