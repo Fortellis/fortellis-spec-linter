@@ -86,7 +86,7 @@ function mapRuleSeverity(rule) {
 
   if (clone.severity === void 0) {
     // assign a default severity if none is declared
-    clone.severity = DiagnosticSeverity.Warning;
+    clone.severity = DiagnosticSeverity.Error;
   } else if (_.isString(clone.severity)) {
     // map from string to severity code
     clone.severity = Severity[clone.severity];

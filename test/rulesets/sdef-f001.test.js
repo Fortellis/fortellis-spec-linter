@@ -48,7 +48,7 @@ describe('rule sdef_f001', () => {
       expect(results).toHaveLength(1);
       expect(results[0]).toHaveProperty(
         'message',
-        'defintion object keys should be PascalCase'
+        'definition object keys should be PascalCase'
       );
     }
   });

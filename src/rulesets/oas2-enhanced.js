@@ -88,8 +88,8 @@ const winf001 = {
 const eop001 = {
   description: 'operation objects should declare a `produces` property.',
   recommended: true,
-  type: 'verification',
-  severity: 'error',
+  type: 'style',
+  severity: 'warn',
   given: '$.paths[*][*]',
   then: {
     field: 'produces',
@@ -100,8 +100,8 @@ const eop001 = {
 const eop002 = {
   description: 'operation objects should declare a `consumes` property.',
   recommended: true,
-  type: 'verification',
-  severity: 'error',
+  type: 'style',
+  severity: 'warn',
   given: '$.paths[*][*]',
   then: {
     field: 'consumes',
@@ -171,7 +171,7 @@ const wres001 = {
   }
 };
 
-// defintion object rules
+// definition object rules
 const wdef001 = {
   description: 'definition objects should declare a `description` property.',
   recommended: true,
@@ -185,7 +185,7 @@ const wdef001 = {
 };
 
 const wdef002 = {
-  description: 'defintion objects should declare a `required` property.',
+  description: 'definition objects should declare a `required` property.',
   recommended: true,
   type: 'style',
   severity: 'warn',

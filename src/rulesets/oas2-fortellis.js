@@ -11,7 +11,7 @@
  * {type}: must be one of the following values:
  *   s   - root spec object
  *   inf - info object
- *   sdf - security defintion object
+ *   sdf - security definition object
  *   sch - security scheme object
  *   scp - security scope object
  *   par - parameter object
@@ -39,7 +39,7 @@
 //   - termsOfService?
 const einf_f001 = {
   description:
-    'the version should follow semantic versioning: {major-nnumber}.{minor-number}.{patch-number}',
+    'the version should follow semantic versioning: {major-number}.{minor-number}.{patch-number}',
   recommended: true,
   type: 'validation',
   severity: 'error',
@@ -99,8 +99,8 @@ const wop_f001 = {
   // $.paths[*][*].parameters[?(@.name == 'Request-Id' && @.in == 'header')]
   //
   recommended: true,
-  type: 'validation',
-  severity: 'error',
+  type: 'style',
+  severity: 'warn',
   given: '$.paths[*][*].parameters',
   then: {
     function: 'fortellisRequestIdHeader'
@@ -118,8 +118,8 @@ const wpar_f001 = {
   //  'body.PascalCase'
   //
   recommended: true,
-  severity: 'warn',
   type: 'style',
+  severity: 'warn',
   given: '$.parameters',
   then: {
     field: '@key',
@@ -149,7 +149,7 @@ const wpar_f002 = {
 const wres_f001 = {
   description: 'responses should include a `Request-Id` header',
   recommended: true,
-  type: 'validation',
+  type: 'style',
   severity: 'warn',
   given: '$.responses[*].headers',
   then: {
@@ -166,9 +166,9 @@ const wres_f001 = {
 
 // external docs
 
-// defintion object rules
+// definition object rules
 const edef_f001 = {
-  description: 'defintion objects should include an `example` property',
+  description: 'definition objects should include an `example` property',
   recommended: true,
   type: 'validation',
   severity: 'error',
@@ -180,7 +180,7 @@ const edef_f001 = {
 };
 
 const sdef_f001 = {
-  description: 'defintion object keys should be PascalCase',
+  description: 'definition object keys should be PascalCase',
   type: 'style',
   severity: 'warn',
   given: '$.definitions',
@@ -194,7 +194,7 @@ const sdef_f001 = {
 };
 
 const sdef_f002 = {
-  description: 'defintion object property names should be camelCase',
+  description: 'definition object property names should be camelCase',
   type: 'style',
   severity: 'warn',
   given: '$.definitions[*].properties',
