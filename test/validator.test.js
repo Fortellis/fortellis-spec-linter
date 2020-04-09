@@ -32,7 +32,7 @@ describe('Fortellis Spec Validator', () => {
       expect(response).toHaveLength(1);
       expect(response[0].code).toEqual('einf_f001');
       expect(response[0].message).toEqual(
-        'the version should follow semantic versioning: {major-nnumber}.{minor-number}.{patch-number}'
+        'the version should follow semantic versioning: {major-number}.{minor-number}.{patch-number}'
       );
     });
 
@@ -207,7 +207,7 @@ describe('Fortellis Spec Validator', () => {
         expect(response).toHaveLength(1);
         expect(response[0].code).toEqual('edef_f001');
         expect(response[0].message).toEqual(
-          'defintion objects should include an `example` property'
+          'definition objects should include an `example` property'
         );
       });
 
@@ -219,11 +219,11 @@ describe('Fortellis Spec Validator', () => {
         expect(response).toHaveLength(2);
         expect(response[0].code).toEqual('sdef_f001');
         expect(response[0].message).toEqual(
-          'defintion object keys should be PascalCase'
+          'definition object keys should be PascalCase'
         );
         expect(response[1].code).toEqual('sdef_f001');
         expect(response[1].message).toEqual(
-          'defintion object keys should be PascalCase'
+          'definition object keys should be PascalCase'
         );
       });
 
@@ -235,11 +235,11 @@ describe('Fortellis Spec Validator', () => {
         expect(response).toHaveLength(2);
         expect(response[0].code).toEqual('sdef_f002');
         expect(response[0].message).toEqual(
-          'defintion object property names should be camelCase'
+          'definition object property names should be camelCase'
         );
         expect(response[1].code).toEqual('sdef_f002');
         expect(response[1].message).toEqual(
-          'defintion object property names should be camelCase'
+          'definition object property names should be camelCase'
         );
       });
     });

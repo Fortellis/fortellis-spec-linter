@@ -10,7 +10,7 @@ describe('rule edef_f001', () => {
   });
   s.mergeRules();
 
-  it('should pass if defintion objects include an `example` property', async function() {
+  it('should pass if definition objects include an `example` property', async function() {
     const results = await s.run({
       definitions: {
         Foo: {
@@ -28,7 +28,7 @@ describe('rule edef_f001', () => {
     expect(results).toEqual([]);
   });
 
-  it('should fail if defintion objects do not include an `example` property', async function() {
+  it('should fail if definition objects do not include an `example` property', async function() {
     const results = await s.run({
       definitions: {
         Foo: {},

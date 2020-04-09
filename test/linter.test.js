@@ -9,10 +9,10 @@ const {
 } = require('../src/index');
 
 describe('mapRuleSeverity', function() {
-  it('should assign a default severity of `warning` if missing', async function() {
+  it('should assign a default severity of `error` if missing', async function() {
     const testRule = {};
     const mappedRule = mapRuleSeverity(testRule);
-    const expected = { severity: DiagnosticSeverity.Warning };
+    const expected = { severity: DiagnosticSeverity.Error };
 
     expect(mappedRule).toEqual(expected);
   });
