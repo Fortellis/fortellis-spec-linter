@@ -1,6 +1,6 @@
 # Fortellis Specification Validator
 
-The Fortellis specification validator can be used to ensure that API specifications conform to the Fortellis rules and standards. More information on the Fortellis rules and standards can be found [here](https://docs.fortellis.io/docs/tutorials/spec-provider/linting-api-specs/).
+The Fortellis specification validator can be used to ensure that API specifications conform to the Fortellis rules and standards. More information on the Fortellis rules and standards can be found [here](https://docs.fortellis.io/docs/tutorials/spec-writing/linting-api-specs/).
 
 ## Installation
 
